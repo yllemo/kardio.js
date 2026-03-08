@@ -40,7 +40,7 @@ Kopiera och klistra in detta i en HTML-fil:
 <body>
   <div id="diagram" style="height: 500px; border: 1px solid #ccc;"></div>
   
-  <script src="https://cdn.jsdelivr.net/gh/användare/kardio.js/kardio.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/yllemo/kardio.js/kardio.js"></script>
   <script>
     Kardio.render('#diagram', `
       card A "Strategi"   "Vart vi är på väg" #ledning blue   2024-01
@@ -59,7 +59,22 @@ Kopiera och klistra in detta i en HTML-fil:
 
 ## Installation
 
-Kopiera `kardio.js` till ditt projekt. Inga beroenden krävs.
+### Via CDN (rekommenderat)
+
+```html
+<!-- Via jsDelivr CDN (snabbt & cachad) -->
+<script src="https://cdn.jsdelivr.net/gh/yllemo/kardio.js/kardio.js"></script>
+
+<!-- Via GitHub Pages (när aktiverat) -->
+<script src="https://yllemo.github.io/kardio.js/kardio.js"></script>
+
+<!-- Specifik version via jsDelivr -->
+<script src="https://cdn.jsdelivr.net/gh/yllemo/kardio.js@v1.0.0/kardio.js"></script>
+```
+
+### Lokal installation
+
+Ladda ner `kardio.js` och kopiera till ditt projekt:
 
 ```html
 <script src="kardio.js"></script>
