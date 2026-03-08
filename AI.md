@@ -20,7 +20,7 @@ Använd detta när du skriver JavaScript. Undviker HTML-escaping-problem.
 
 ```html
 <div id="diagram" style="height: 600px"></div>
-<script src="kardio.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/yllemo/kardio.js/kardio.js"></script>
 <script>
   Kardio.render('#diagram', `
     // DSL här — normala citattecken fungerar i template literals
@@ -41,7 +41,7 @@ Använd detta när du skriver statisk HTML utan JavaScript. Kräver HTML-escapin
   card B &quot;Titel B&quot; green
   A --> B : &quot;relation&quot; blue
 "></div>
-<script src="kardio.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/yllemo/kardio.js/kardio.js"></script>
 ```
 
 > **Regel:** Citattecken `"` i `data-kardio`-attribut MÅSTE skrivas som `&quot;`. Annars parsas HTML-attributet felaktigt.
@@ -387,7 +387,7 @@ A --> B : "etikett"
 
 Innan du returnerar kod med Kardio, verifiera:
 
-- [ ] `kardio.js` laddas med `<script src="kardio.js"></script>`
+- [ ] `kardio.js` laddas via CDN med `<script src="https://cdn.jsdelivr.net/gh/yllemo/kardio.js/kardio.js"></script>`
 - [ ] Containern har explicit höjd (`height: Npx` eller `height: 100vh`)
 - [ ] Varje kort har ett unikt alias utan mellanslag
 - [ ] Alla alias som används i relationer är deklarerade med `card`
