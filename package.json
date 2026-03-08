@@ -1,0 +1,42 @@
+{
+  "name": "kardio.js",
+  "version": "1.0.0",
+  "description": "Interactive card diagram library for the web. Create drag-and-drop diagrams with a simple DSL - no framework, no build step, just one JavaScript file.",
+  "main": "kardio.js",
+  "scripts": {
+    "start": "python -m http.server 8000 || python3 -m http.server 8000 || npx serve .",
+    "demo": "echo 'Öppna kardio-example.html i webbläsaren för att se demon'"
+  },
+  "keywords": [
+    "diagram",
+    "interactive",
+    "cards",
+    "visualization",
+    "html",
+    "javascript",
+    "drag-and-drop",
+    "no-framework",
+    "mermaid-alternative"
+  ],
+  "author": "yllemo",
+  "license": "MIT",
+  "files": [
+    "kardio.js",
+    "README.md",
+    "kardio-example.html"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yllemo/kardio.js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yllemo/kardio.js/issues"
+  },
+  "homepage": "https://github.com/yllemo/kardio.js",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "browser": "kardio.js",
+  "jsdelivr": "kardio.js",
+  "unpkg": "kardio.js"
+}

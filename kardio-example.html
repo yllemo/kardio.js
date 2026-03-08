@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kardio.js — Exempel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #080909;
+      font-family: system-ui, sans-serif;
+      color: #e8eaf0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      padding: 10px 20px;
+      background: #0e0f11;
+      border-bottom: 1px solid #1e2128;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #4f8fff;
+      letter-spacing: 0.04em;
+    }
+
+    header span {
+      font-size: 11px;
+      color: #7a7f8e;
+      font-family: 'Courier New', monospace;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px;
+      padding: 10px 20px 0;
+      background: #0e0f11;
+      border-bottom: 1px solid #1e2128;
+      flex-shrink: 0;
+    }
+
+    .tab {
+      padding: 7px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1.5px solid #2a2d35;
+      border-bottom: none;
+      border-radius: 6px 6px 0 0;
+      background: #16181c;
+      color: #7a7f8e;
+      transition: all 0.15s;
+    }
+
+    .tab.active {
+      background: #0e0f11;
+      color: #4f8fff;
+      border-color: #3d4150;
+    }
+
+    .tab-content { display: none; flex: 1; }
+    .tab-content.active { display: flex; }
+
+    /* ── TAB 1: Auto-init ── */
+    .demo-autoinit {
+      width: 100%; height: 100%;
+    }
+
+    /* ── TAB 2: Programmatic ── */
+    .demo-split {
+      width: 100%; height: 100%;
+      display: flex;
+    }
+
+    .editor-pane {
+      width: 320px;
+      flex-shrink: 0;
+      background: #0e0f11;
+      border-right: 1px solid #1e2128;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .editor-pane label {
+      padding: 10px 14px 6px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #7a7f8e;
+      font-family: 'Courier New', monospace;
+    }
+
+    #dsl-input {
+      flex: 1;
+      background: #080909;
+      color: #e8eaf0;
+      border: none;
+      outline: none;
+      padding: 12px 14px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      resize: none;
+      border-top: 1px solid #1e2128;
+    }
+
+    .editor-actions {
+      padding: 10px 14px;
+      display: flex;
+      gap: 8px;
+      border-top: 1px solid #1e2128;
+    }
+
+    .editor-actions button {
+      flex: 1;
+      background: #4f8fff;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      padding: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .editor-actions button:hover { background: #3a7aee; }
+    .editor-actions button.secondary {
+      background: transparent;
+      color: #7a7f8e;
+      border: 1.5px solid #2a2d35;
+    }
+    .editor-actions button.secondary:hover { border-color: #3d4150; color: #e8eaf0; }
+
+    #diagram-pane {
+      flex: 1;
+      position: relative;
+    }
+
+    /* ── TAB 3: Multiple ── */
+    .demo-multi {
+      width: 100%; height: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 1px;
+      background: #1e2128;
+    }
+
+    .demo-multi .kardio {
+      background: #0e0f11;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Kardio.js</h1>
+  <span>Interaktivt kortdiagram-bibliotek · v1.0.0</span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" data-tab="0">Auto-init (DSL inline)</div>
+  <div class="tab" data-tab="1">Programmatisk (editor)</div>
+  <div class="tab" data-tab="2">Flera instanser</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     TAB 0 — Auto-init via data-kardio attribute
+     Biblioteket initialiserar automatiskt alla
+     element med klassen .kardio på sidan.
+═══════════════════════════════════════════════ -->
+<div class="tab-content active">
+  <div class="kardio demo-autoinit" data-kardio="
+// Produktorganisation — auto-init exempel
+
+card vision   &quot;Vision&quot;          &quot;Vart vi är på väg&quot;          #strategi blue    2024-01
+card strategi &quot;Strategi&quot;        &quot;Hur vi tar oss dit&quot;         #strategi blue    2024-02
+card produkt  &quot;Produkt&quot;         &quot;Vad vi bygger&quot;              #produkt  purple  2024-03
+card ux       &quot;UX &amp; Design&quot;    &quot;Gränssnitt och upplevelse&quot;  #design   purple  2024-03
+card backend  &quot;Backend&quot;         &quot;API och databas&quot;            #teknik   green   2024-04
+card frontend &quot;Frontend&quot;        &quot;Webb och app&quot;               #teknik   green   2024-04
+card data     &quot;Data &amp; Analys&quot;  &quot;Mätning och insikter&quot;       #data     cyan    2024-05
+card marknad  &quot;Marknad&quot;         &quot;Lansering och tillväxt&quot;     #marknad  orange  2024-05
+
+vision   --> strategi : &quot;formar&quot;      blue   2px
+strategi --> produkt  : &quot;prioriterar&quot; blue
+strategi --> marknad  : &quot;styr&quot;        orange
+produkt  --> ux       : &quot;kräver&quot;      purple dashed
+produkt  --> backend  : &quot;kräver&quot;      green  dashed
+ux       <--> frontend : &quot;samarbetar&quot; purple
+backend  <--> frontend : &quot;API&quot;        green  dashed
+backend  --> data     : &quot;genererar&quot;   cyan   dotted
+data     --> strategi : &quot;informerar&quot;  blue   dotted 1px
+marknad  --> data     : &quot;mäter&quot;       cyan   dotted
+"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     TAB 1 — Programmatisk render med live-editor
+═══════════════════════════════════════════════ -->
+<div class="tab-content">
+  <div class="demo-split">
+    <div class="editor-pane">
+      <label>Kardio DSL</label>
+      <textarea id="dsl-input" spellcheck="false">// Redigera DSL och klicka Rendera
+
+card A "Projektledare" "Ansvarig för leverans" #person blue 2024-01
+card B "Arkitekt"      "Systemdesign"          #person purple 2024-02
+card C "Utvecklare 1"  "Frontend-specialist"   #dev green 2024-03
+card D "Utvecklare 2"  "Backend-specialist"    #dev green 2024-03
+card E "Testare"       "QA och automatisering" #qa orange 2024-04
+
+A --> B  : "delegerar" blue
+A --> C  : "leder"     blue dashed
+A --> D  : "leder"     blue dashed
+B <--> C : "styr"      purple
+B <--> D : "styr"      purple
+C --> E  : "levererar" green dotted
+D --> E  : "levererar" green dotted</textarea>
+      <div class="editor-actions">
+        <button id="btn-render">▶ Rendera</button>
+        <button class="secondary" id="btn-reset">↺ Återställ</button>
+      </div>
+    </div>
+    <div id="diagram-pane"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     TAB 2 — Flera oberoende instanser på sidan
+═══════════════════════════════════════════════ -->
+<div class="tab-content">
+  <div class="demo-multi">
+
+    <div class="kardio" data-kardio="
+// Team A
+card lead &quot;Tech Lead&quot; #person blue
+card dev1 &quot;Senior Dev&quot; #dev green
+card dev2 &quot;Junior Dev&quot; #dev green
+card qa   &quot;QA&quot; #qa orange
+lead --> dev1 : &quot;mentor&quot; blue
+lead --> dev2 : &quot;mentor&quot; blue dashed
+dev1 --> qa   : &quot;levererar&quot; green dotted
+dev2 --> qa   : &quot;levererar&quot; green dotted
+"></div>
+
+    <div class="kardio" data-kardio="
+// Systemarkitektur
+card ui  &quot;UI Layer&quot;  #frontend purple
+card api &quot;API&quot;       #backend  green
+card db  &quot;Databas&quot;   #backend  green
+card cdn &quot;CDN&quot;       #infra    cyan
+ui  --> api : &quot;anropar&quot; purple
+api --> db  : &quot;läser/skriver&quot; green dashed
+cdn --> ui  : &quot;serverar&quot; cyan dotted
+api --> cdn : &quot;cachar&quot; cyan dotted
+"></div>
+
+    <div class="kardio" data-kardio="
+// Produktflöde
+card idé    &quot;Idé&quot;       #process blue  2024-01
+card design &quot;Design&quot;    #process purple 2024-02
+card bygg   &quot;Bygg&quot;      #process green  2024-03
+card test   &quot;Testa&quot;     #process orange 2024-04
+card deploy &quot;Driftsätt&quot; #process red    2024-05
+idé    --> design : &quot;→&quot; blue
+design --> bygg   : &quot;→&quot; purple
+bygg   --> test   : &quot;→&quot; green
+test   --> deploy : &quot;→&quot; orange
+test   --> bygg   : &quot;fel&quot; red dashed
+"></div>
+
+    <div class="kardio" data-kardio="
+// Konceptkarta
+card ai    &quot;AI&quot;          &quot;Artificiell intelligens&quot; blue
+card ml    &quot;Maskininlärning&quot; &quot;Träning på data&quot;       purple
+card llm   &quot;LLM&quot;         &quot;Stora språkmodeller&quot;      green
+card agent &quot;Agent&quot;        &quot;Autonom handling&quot;         cyan
+card rag   &quot;RAG&quot;          &quot;Retrieval Augmented Gen&quot;  orange
+ai  --> ml    : &quot;inkluderar&quot;  blue
+ml  --> llm   : &quot;möjliggör&quot;  purple
+llm --> agent : &quot;driver&quot;     green
+llm --> rag   : &quot;utökas med&quot; orange dashed
+rag --> agent : &quot;förser&quot;     cyan dotted
+"></div>
+
+  </div>
+</div>
+
+<script src="kardio.js"></script>
+<script>
+  // ── Tab switching ──────────────────────────────
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.tab-content')[parseInt(tab.dataset.tab)].classList.add('active');
+    });
+  });
+
+  // ── Tab 1: programmatic render ────────────────
+  let instance = null;
+
+  function renderDiagram() {
+    const src = document.getElementById('dsl-input').value;
+    if (instance) instance.destroy();
+    instance = Kardio.render('#diagram-pane', src);
+  }
+
+  document.getElementById('btn-render').addEventListener('click', renderDiagram);
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    document.getElementById('dsl-input').value = `// Redigera DSL och klicka Rendera
+
+card A "Projektledare" "Ansvarig för leverans" #person blue 2024-01
+card B "Arkitekt"      "Systemdesign"          #person purple 2024-02
+card C "Utvecklare 1"  "Frontend-specialist"   #dev green 2024-03
+card D "Utvecklare 2"  "Backend-specialist"    #dev green 2024-03
+card E "Testare"       "QA och automatisering" #qa orange 2024-04
+
+A --> B  : "delegerar" blue
+A --> C  : "leder"     blue dashed
+A --> D  : "leder"     blue dashed
+B <--> C : "styr"      purple
+B <--> D : "styr"      purple
+C --> E  : "levererar" green dotted
+D --> E  : "levererar" green dotted`;
+    renderDiagram();
+  });
+
+  // Render initial diagram on tab 1
+  renderDiagram();
+</script>
+</body>
+</html>
